@@ -8,6 +8,8 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.componenets.data_transformation import DataTransformation
 from src.componenets.data_transformation import DataTransformationConfig
+from src.componenets.model_trainer import ModelTrainer
+from src.componenets.model_trainer import ModelTrainerConfig
 
 @dataclass
 class DataIngestionConfig:
@@ -59,3 +61,8 @@ if __name__ == "__main__":
     print(f"Train Array Shape: {train_arr.shape}")
     print(f"Test Array Shape: {test_arr.shape}")
     print(f"Preprocessor Path: {preprocessor_path}")
+
+    model_trainer = ModelTrainer()
+    best_model_name, model_report = model_trainer.initiate_model_trainer(train_arr, test_arr, preprocessor_path)
+    print(f"Best Model Name: {best_model_name}")
+    print(f"Model Report: {model_report}")
