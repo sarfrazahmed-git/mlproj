@@ -6,6 +6,8 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+from src.componenets.data_transformation import DataTransformation
+from src.componenets.data_transformation import DataTransformationConfig
 
 @dataclass
 class DataIngestionConfig:
@@ -21,7 +23,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Data Ingestion method starts")
         try:
-            df = pd.read_csv('../../notebook/data/stud.csv')
+            df = pd.read_csv('notebook/data/stud.csv')
             logging.info("Dataset read as pandas DataFrame")
 
             os.makedirs(self.ingestion_config.directory, exist_ok=True)
@@ -50,3 +52,10 @@ if __name__ == "__main__":
     print(f"Train Data Path: {train_data}")
     print(f"Test Data Path: {test_data}")
     print(f"Raw Data Path: {raw_data}")
+
+    data_transformation = DataTransformation()
+    train_arr, test_arr, preprocessor_path = data_transformation.initiate_data_transformation(train_data, test_data)
+
+    print(f"Train Array Shape: {train_arr.shape}")
+    print(f"Test Array Shape: {test_arr.shape}")
+    print(f"Preprocessor Path: {preprocessor_path}")
