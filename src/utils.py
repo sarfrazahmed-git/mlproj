@@ -1,12 +1,12 @@
 import os
 import sys
+import pickle
 
 import pandas as pd
 import numpy as np
 import dill
 from src.logger import logging
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-
 from src.exception import CustomException
 
 def save_object(file_path: str, obj: object):
@@ -39,3 +39,10 @@ def evaluate_models(X_train, y_train, X_test, y_test, models):
         }
         logging.info(f"{model_name} - R2: {r2}, MAE: {mae}, MSE: {mse}, RMSE: {rmse}")
     return model_report
+
+def load_object(file_path: str):
+    try:
+        with open(file_path, 'rb') as file_obj:
+            return pickle.load(file_obj)
+    except Exception as e:
+        raise CustomException(e, sys) from e
